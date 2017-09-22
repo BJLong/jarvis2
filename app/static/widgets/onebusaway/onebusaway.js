@@ -1,13 +1,14 @@
 var onebusaway = onebusaway || {};
 
 onebusaway.parseState = function (data) {
-  var body = data.entry;
+  var body = data;
+  console.log(data);
 
-  body.arrivalsAndDepartures.forEach(function (d) {
+  body.entry.arrivalsAndDepartures.forEach(function (d) {
 
     var departureTime = moment(d.predictedArrivalTime).locale('en-us'),
         now = moment();
-    console.log(departureTime)
+    console.log(departureTime);
     if (departureTime.isBefore(now)) {
     } else {
         d.departureTime = departureTime;
