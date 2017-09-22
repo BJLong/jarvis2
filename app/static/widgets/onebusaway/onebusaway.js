@@ -4,7 +4,7 @@ onebusaway.parseState = function (data) {
   var body = data;
   console.log(data);
 
-  body.entry.arrivalsAndDepartures.forEach(function (d) {
+  body.entry[0].forEach(function (d) {
 
     var departureTime = moment(d.predictedArrivalTime).locale('en-us'),
         now = moment();
