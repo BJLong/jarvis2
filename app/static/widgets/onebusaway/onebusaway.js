@@ -1,9 +1,9 @@
 var onebusaway = onebusaway || {};
 
 onebusaway.parseState = function (data) {
-  var body = data;
+  var body = data.entry;
 
-  body.entry.arrivalsAndDepartures.forEach(function (d) {
+  body.arrivalsAndDepartures.forEach(function (d) {
 
     var departureTime = moment(d.predictedArrivalTime).locale('en-us'),
         now = moment();
