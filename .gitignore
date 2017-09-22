@@ -9,5 +9,4 @@
 /venv/
 /venv2/
 /venv3/
-config.py
 config_*.py
