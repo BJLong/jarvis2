@@ -10,6 +10,11 @@
       <div data-widget="time"></div>
     </div>
     {% endif %}
+    {% if is_job_enabled('onebusaway') %}
+    <div class="col-3">
+      <div data-widget="onebusaway"></div>
+    </div>
+    {% endif %}
     {% if is_job_enabled('atb') %}
     <div class="col-3">
       <div data-widget="atb"></div>
