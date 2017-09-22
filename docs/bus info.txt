@@ -1,0 +1,29 @@
+<stop>
+<id>1_29270</id>
+<lat>47.619846</lat>
+<lon>-122.320473</lon>
+<direction>E</direction>
+<name>E John St & Broadway E</name>
+<code>29270</code>
+<locationType>0</locationType>
+<wheelchairBoarding>UNKNOWN</wheelchairBoarding>
+<routeIds>
+<string>1_100275</string>
+<string>1_100002</string>
+<string>1_100223</string>
+</routeIds>
+</stop>
+
+<route>
+<id>1_100275</id>
+<shortName>8</shortName>
+<description>Seattle Center to Capitol Hill to Rainier Beach</description>
+<type>3</type>
+<url>http://metro.kingcounty.gov/schedules/008/n0.html</url>
+<agencyId>1</agencyId>
+</route>
+
+urls:
+	route 8:
+	http://api.pugetsound.onebusaway.org/api/where/stops-for-route/1_100275.xml?key=TEST
+

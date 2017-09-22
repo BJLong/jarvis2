@@ -1,4 +1,27 @@
 [data-widget="onebusaway"] {
-    padding: 5px;
-    background: #81c6dd;
+  height: 100%;
+  padding: 5px;
+  background: #90ca77;
+  text-align: center;
+}
+[data-widget="onebusaway"] h1 {
+  font-size: 55px;
+  margin: 0;
+}
+[data-widget="onebusaway"] h2 {
+  font-size: 20px;
+}
+[data-widget="onebusaway"] p {
+  font-size: 16px;
+}
+[data-widget="onebusaway"] table {
+  margin: 0 10px 0 10px;
+}
+[data-widget="onebusaway"] .time {
+  text-align: right;
+  white-space: nowrap;
+}
+[data-widget="onebusaway"] .destination {
+  text-align: left;
+  width: 100%;
 }
