@@ -4,8 +4,10 @@ onebusaway.parseState = function (data) {
   var body = data;
 
   body.entry.arrivalsAndDepartures.forEach(function (d) {
+
     var departureTime = moment(d.predictedArrivalTime).locale('en-us'),
         now = moment();
+    console.log(departureTime)
     if (departureTime.isBefore(now)) {
     } else {
         d.departureTime = departureTime;
