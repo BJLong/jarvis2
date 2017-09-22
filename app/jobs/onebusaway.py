@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 from jobs import AbstractJob
+import requests
 
 
 class Onebusaway(AbstractJob):
