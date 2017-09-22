@@ -1,7 +1,7 @@
 var time = time || {};
 
 time.update = function (vnode) {
-  vnode.state.data = {now: moment().locale('nb')};
+  vnode.state.data = {now: moment().locale('en-us')};
   m.redraw();
 };
 
