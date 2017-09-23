@@ -1,26 +1,43 @@
 var onebusaway = onebusaway || {};
 
+onebusaway.jsonToMap = function (j) {
+    return new Map(j);
+};
+
+onebusaway.getDepTime = function (predictedArrivalTime) {
+    var departureTime = moment(predictedArrivalTime).locale('en-us'),
+        now = moment();
+    console.log(departureTime);
+    // if (departureTime.isBefore(now)) {
+    // } else {
+        // d.departureTime = departureTime;
+    // }
+    return departureTime;
+};
+
 onebusaway.parseState = function (data) {
   var body = data;
-  console.log(data);
+  // console.log(data);
 
-  body.entry[0].forEach(function (d) {
+  body.data.entry.arrivalsAndDepartures.forEach(function (d) {
 
     var departureTime = moment(d.predictedArrivalTime).locale('en-us'),
         now = moment();
-    console.log(departureTime);
+    // console.log(departureTime);
     if (departureTime.isBefore(now)) {
     } else {
         d.departureTime = departureTime;
     }
   });
 
-  if (body.departures.length > 0) {
-    body.next = body.departures[0];
-    body.upcoming = {
-        'line': body.departures.routeShortName
-    }
-    // body.upcoming = body.departures.slice(1, 5);
+  if (body.data.entry.arrivalsAndDepartures.length > 0) {
+    body.next = body.data.entry.arrivalsAndDepartures[0];
+    // var json_data = '{"line": ' + body.data.entry.arrivalsAndDepartures[0].routeShortName + '}';
+    // var json_obj = JSON.parse(json_data);
+    console.log(body.data.entry.arrivalsAndDepartures.slice(1, 5));
+    // body.upcoming = onebusaway.jsonToMap(json_obj.entries());
+    body.upcoming = body.data.entry.arrivalsAndDepartures.slice(1, 5);
+    // body.upcoming = new Map([['line', body.data.entry.arrivalsAndDepartures[0].routeShortName]]);
   } else {
     body.next = null;
     body.upcoming = [];
@@ -33,12 +50,23 @@ onebusaway.view = function (vnode) {
     return m('p', 'Waiting for data');
   }
   var state = onebusaway.parseState(vnode.attrs.data);
-  var rows = state.upcoming.map(function (departure) {
-    return m('tr', [
-      m('td', {'class': 'destination'}, departure.line),
-      m('td.time', departure.departureTime.format('HH:mm'))
-    ]);
-  });
+  var rows = [];
+  // for(var dep in state.upcoming.values()){
+  for(var i=0; i < state.upcoming.length;i++){
+    console.log(state.upcoming[i]);
+    var t = onebusaway.getDepTime(state.upcoming[i].predictedArrivalTime);
+    console.log(t);
+    rows.push(m('tr', [
+      m('td', {'class': 'destination'}, state.upcoming[i].routeShortName),
+      m('td.time', t.format('HH:mm'))
+    ]));
+  }
+  // var rows = state.upcoming.map(function (departure) {
+  //   return m('tr', [
+  //     m('td', {'class': 'destination'}, departure.line),
+  //     m('td.time', departure.departureTime.format('HH:mm'))
+  //   ]);
+  // });
   return [
     m('p.fade', 'Bus ' + state.next.line + ' til ' +
       state.next.destination),
