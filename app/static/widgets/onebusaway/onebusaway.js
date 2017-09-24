@@ -29,14 +29,21 @@ onebusaway.parseState = function (data) {
         d.departureTime = departureTime;
     }
   });
-
+  var c = 0;
+  var deps = [];
   if (body.data.entry.arrivalsAndDepartures.length > 0) {
     body.next = body.data.entry.arrivalsAndDepartures[0];
-    // var json_data = '{"line": ' + body.data.entry.arrivalsAndDepartures[0].routeShortName + '}';
-    // var json_obj = JSON.parse(json_data);
-    console.log(body.data.entry.arrivalsAndDepartures.slice(1, 5));
-    // body.upcoming = onebusaway.jsonToMap(json_obj.entries());
-    body.upcoming = body.data.entry.arrivalsAndDepartures.slice(1, 5);
+    for(var i=0;i <body.data.entry.arrivalsAndDepartures.length;i++){
+        if(c < 5){
+            if(body.data.entry.arrivalsAndDepartures[i].routeShortName == "8"){
+                c++;
+                deps.push(body.data.entry.arrivalsAndDepartures[i]);
+            }
+        }
+    }
+    // body.upcoming = body.data.entry.arrivalsAndDepartures.slice(1, 5);
+    // body.upcoming = body.data.entry.arrivalsAndDepartures;
+    body.upcoming = deps;
     // body.upcoming = new Map([['line', body.data.entry.arrivalsAndDepartures[0].routeShortName]]);
   } else {
     body.next = null;
@@ -51,7 +58,6 @@ onebusaway.view = function (vnode) {
   }
   var state = onebusaway.parseState(vnode.attrs.data);
   var rows = [];
-  // for(var dep in state.upcoming.values()){
   for(var i=0; i < state.upcoming.length;i++){
     console.log(state.upcoming[i]);
     var t = onebusaway.getDepTime(state.upcoming[i].predictedArrivalTime);
@@ -61,17 +67,11 @@ onebusaway.view = function (vnode) {
       m('td.time', t.format('HH:mm'))
     ]));
   }
-  // var rows = state.upcoming.map(function (departure) {
-  //   return m('tr', [
-  //     m('td', {'class': 'destination'}, departure.line),
-  //     m('td.time', departure.departureTime.format('HH:mm'))
-  //   ]);
-  // });
+  var nextDepTime = onebusaway.getDepTime(state.upcoming[0].predictedArrivalTime);
   return [
-    m('p.fade', 'Bus ' + state.next.line + ' til ' +
-      state.next.destination),
-    m('h1', state.next.departureTime.format('HH:mm')),
-    m('h2', state.next.departureTime.fromNow()),
+    m('p.fade', 'Brandon\'s work route: line 8 '),
+    m('h1', nextDepTime.format('HH:mm')),
+    m('h2', nextDepTime.fromNow()),
     m('table', rows),
     m('p', {'class': 'fade updated-at'}, 'Sist oppdatert: ' +
       state.updatedAt)
