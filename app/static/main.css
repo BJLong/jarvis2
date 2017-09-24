@@ -10,7 +10,7 @@ body {
 }
 
 .col-3, .col-6 {
-  width: 290px;
+  width: 435px;
   float: left;
   margin: 5px 10px;
 }
@@ -31,6 +31,6 @@ body {
 
 [data-widget] {
   position: relative;
-  height: 290px !important;
+  height: 435px !important;
   width: 100%;
 }
